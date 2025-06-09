@@ -1,69 +1,56 @@
 class BlogPostsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_blog_post, except: [:index, :new, :create]
+
   def index
-    @blog_posts = BlogPost.all
+    @blog_posts = user_signed_in? ? BlogPost.all : BlogPost.published
   end
 
   def show
-    @blog_posts = BlogPost.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    redirect_to root_path
   end
+
   def new
-    if user_signed_in?
-      @blog_post = BlogPost.new
-    else
-      redirect_to root_path, alert: 'You must be signed in to create a blog post.'
-    end
+    @blog_post = BlogPost.new
   end
 
   def create
     @blog_post = BlogPost.new(blog_post_params)
     if @blog_post.save
-      redirect_to @blog_post, notice: 'Blog post was successfully created.'
+      redirect_to @blog_post
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    @blog_post = BlogPost.find(params[:id])
-  
   end
 
   def update
-    @blog_post = BlogPost.find(params[:id])
     if @blog_post.update(blog_post_params)
-      redirect_to @blog_post, notice: 'Blog post was successfully updated.'
+      redirect_to @blog_post
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @blog_post = BlogPost.find(params[:id])
     @blog_post.destroy
-    redirect_to root_path notice: 'Blog post was successfully deleted.'
-  rescue ActiveRecord::RecordNotFound
-    redirect_to blog_posts_path, alert: 'Blog post not found.'
-  rescue StandardError => e
-    redirect_to blog_posts_path, alert: "An error occurred: #{e.message}"
+    redirect_to root_path
   end
-
 
   private
+
   def blog_post_params
-    params.require(:blog_post).permit(:title, :body)
-  rescue ActionController::ParameterMissing
-    redirect_to new_blog_post_path, alert: 'Missing required parameters.'
-  rescue ActionController::UnpermittedParameters => e
-    redirect_to new_blog_post_path, alert: "Unpermitted parameters: #{e.params.join(', ')}"
-  rescue StandardError => e
-    redirect_to new_blog_post_path, alert: "An error occurred: #{e.message}"
-  
-  
+    params.require(:blog_post).permit(:title, :body, :published_at)
+  end
+
+  def set_blog_post
+    @blog_post = user_signed_in? ? BlogPost.find(params[:id]) : BlogPost.published.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path
   end
 end
+
 
 # Option 2: use before_action to DRY up the code
 # class BlogPostsController < ApplicationController
@@ -114,7 +101,7 @@ end
 #   end
 
 #   def set_blog_post
-#     @blog_post = BlogPost.find(params[:id])
+#     @blog_post = BlogPost.published.find(params[:id])
 #   rescue ActiveRecord::RecordNotFound
 #     redirect_to root_path
 #   end
