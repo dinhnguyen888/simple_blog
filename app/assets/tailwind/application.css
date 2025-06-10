@@ -1,2 +1,30 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+/* Wrapper của pagination */
+.pagy-nav.pagination {
+  @apply flex justify-center items-center gap-1 p-2 rounded-xl  ;
+}
+
+/* Các nút mặc định */
+.page a,
+.page.gap {
+  @apply inline-flex items-center justify-center w-10 h-10 rounded-md border border-gray-300 text-gray-500 text-sm font-medium bg-white hover:bg-indigo-100 transition-all duration-200;
+}
+
+/* Nút hiện tại */
+.page.active {
+  @apply inline-flex items-center justify-center w-10 h-10 rounded-md border border-indigo-500 bg-indigo-500 text-white font-semibold shadow focus:outline-none;
+}
+
+/* Nút prev/next */
+.page.prev a,
+.page.next a {
+  @apply inline-flex items-center justify-center w-10 h-10 rounded-md border border-gray-300 text-gray-500 bg-white hover:bg-indigo-100 transition-all duration-200;
+}
+
+/* Nút prev/next bị disable */
+.page.prev.disabled,
+.page.next.disabled {
+  @apply inline-flex items-center justify-center w-10 h-10 rounded-md border border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed;
+}

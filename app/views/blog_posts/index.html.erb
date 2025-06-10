@@ -13,3 +13,11 @@
  
   </div>
 <% end %>
+
+<% if @pagy.count > @pagy.items %>
+  <div class="my-16">
+    <%== pagy_nav (@pagy) %>
+  </div>
+<% end %> 
+
+<%# console "Blog posts index loaded" %>
