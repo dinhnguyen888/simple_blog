@@ -19,7 +19,10 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "actiontext.css", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "trix" %>
+    <%= stylesheet_link_tag "trix" %>
   </head>
 
   <body class="prose mx-auto">
@@ -38,7 +41,7 @@
     <% else %>
       <nav>
         <ul>
-          <li><%= link_to "New Blog Post", new_blog_post_path %></li>
+       
           <li><%= link_to "Home", root_path %></li>
           <li><%= link_to "Login", new_user_session_path %></li>
           <li><%= link_to "Register", new_user_registration_path %></li>
