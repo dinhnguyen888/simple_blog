@@ -70,4 +70,4 @@ gem "tailwindcss-rails", "~> 4.2"
 gem "tailwindcss-ruby", "~> 4.1"
 
 # Use Pagy for pagination
-gem "pagy", "~> 7.0"
+gem "pagy"
