@@ -1,4 +1,5 @@
 class BlogPost < ApplicationRecord
+  acts_as_commentable
   
   has_one_attached :cover_image
   has_rich_text :body

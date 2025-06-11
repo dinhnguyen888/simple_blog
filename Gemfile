@@ -71,3 +71,7 @@ gem "tailwindcss-ruby", "~> 4.1"
 
 # Use Pagy for pagination
 gem "pagy"
+gem 'acts_as_commentable_with_threading'
+
+# For environment variables
+gem 'dotenv-rails'

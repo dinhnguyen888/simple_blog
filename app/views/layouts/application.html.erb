@@ -10,14 +10,10 @@
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "actiontext.css", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
@@ -25,31 +21,54 @@
     <%= stylesheet_link_tag "trix" %>
   </head>
 
-  <body class="prose mx-auto mb-4">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+  <body class="min-h-screen bg-gray-50">
+    <header class="bg-white shadow-sm">
+      <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <!-- Logo/Home -->
+          <div class="flex items-center flex-shrink-0">
+            <%= link_to root_path, class: "text-xl font-bold text-gray-900 hover:text-gray-700" do %>
+              Blog
+            <% end %>
+          </div>
 
-    <div>
-    <% if user_signed_in? %>
-      <nav>
-        <ul>
-          <li><%= link_to "Home", root_path %></li>
-          <li><%= link_to "Profile", edit_user_registration_path %></li>
-          <li><%= button_to "Logout", destroy_user_session_path, method: :delete %></li>
-        </ul>
+          <!-- Navigation Links -->
+          <div class="flex items-center space-x-4">
+            <% if user_signed_in? %>
+              <%= link_to "Home", root_path, class: "text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium" %>
+              <%= link_to "Profile", edit_user_registration_path, class: "text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium" %>
+              <%= button_to "Logout", destroy_user_session_path, method: :delete,
+                  class: "text-gray-600 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium" %>
+            <% else %>
+              <%= link_to "Home", root_path, class: "text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium" %>
+              <%= link_to "Sign in", new_user_session_path, class: "text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium" %>
+              <%= link_to "Sign up", new_user_registration_path,
+                  class: "bg-blue-600 text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium" %>
+            <% end %>
+          </div>
+        </div>
       </nav>
-    <% else %>
-      <nav>
-        <ul>
-       
-          <li><%= link_to "Home", root_path %></li>
-          <li><%= link_to "Login", new_user_session_path %></li>
-          <li><%= link_to "Register", new_user_registration_path %></li>
-        </ul>
-      </nav>
-    
+    </header>
+
+    <!-- Flash Messages -->
+    <% if notice %>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+        <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded relative" role="alert">
+          <%= notice %>
+        </div>
+      </div>
     <% end %>
-    </div>
-    <%= yield %>
+
+    <% if alert %>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+        <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative" role="alert">
+          <%= alert %>
+        </div>
+      </div>
+    <% end %>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <%= yield %>
+    </main>
   </body>
 </html>

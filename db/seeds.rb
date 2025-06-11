@@ -8,12 +8,27 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-user = User.where(email: "nguyenphucdinh89@gmail.com").first_or_initialize 
-  user.update!(
-    password: "password",
-    password_confirmation: "password",
-  )
+# Create admin user
+admin = User.where(email: "nguyenphucdinh89@gmail.com").first_or_initialize
+admin.update!(
+  password: "password123",
+  password_confirmation: "password123",
+  role: "admin"
+)
 
+# Create regular user
+user = User.where(email: "user@example.com").first_or_initialize
+user.update!(
+  password: "password123",
+  password_confirmation: "password123",
+  role: "user"
+)
+user = User.where(email: "admin@admin.com").first_or_initialize
+user.update!(
+  password: "admin@123",
+  password_confirmation: "admin@123",
+  role: "admin"
+)
 
 100.times do |i|
   blog_post = BlogPost.where(title: "Blog Post #{i}").first_or_initialize
