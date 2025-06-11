@@ -14,15 +14,15 @@ services:
   web:
     build:
       context: .
-    command: ./bin/thrust ./bin/rails server -b 0.0.0.0 -p 3000
+    command: bash -c "bundle exec rails db:prepare && bundle exec rails server -b 0.0.0.0 -p 3000"
     ports:
-      - "3000:3000"
+      - "3000:3000" 
     env_file:
       - .env
     depends_on:
       - db
     restart: always
-    volumes: [] 
+    volumes: []
 
 volumes:
   postgres_data:
