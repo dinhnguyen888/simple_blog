@@ -38,7 +38,7 @@ RUN bundle install && \
 COPY . .
 
 
-RUN chmod +x ./bin/rails ./bin/thrust
+RUN chmod +x ./bin/*
 
 RUN bundle exec bootsnap precompile app/ lib/
 
