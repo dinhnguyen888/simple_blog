@@ -21,9 +21,8 @@ services:
       - .env
     depends_on:
       - db
-    volumes:
-      - .:/rails
     restart: always
+    volumes: [] 
 
 volumes:
   postgres_data:
