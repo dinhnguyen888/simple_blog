@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  web:
+    build:
+      context: .
+    command: ./bin/thrust ./bin/rails server
+    ports:
+      - "3000:80"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    volumes:
+      - .:/rails
+    restart: always
+
+volumes:
+  postgres_data:
