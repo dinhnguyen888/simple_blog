@@ -37,6 +37,9 @@ RUN bundle install && \
 
 COPY . .
 
+
+RUN chmod +x ./bin/rails ./bin/thrust
+
 RUN bundle exec bootsnap precompile app/ lib/
 
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
