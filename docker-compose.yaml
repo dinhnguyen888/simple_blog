@@ -14,7 +14,7 @@ services:
   web:
     build:
       context: .
-    command: ./bin/thrust ./bin/rails server
+    command: ./bin/thrust ./bin/rails server -b 0.0.0.0 -p 3000
     ports:
       - "3000:3000"
     env_file:
