@@ -14,7 +14,9 @@
         </h2>
         
         <div class="flex items-center gap-4 text-sm text-gray-600 mb-4">
-          <span><%= blog_post.published_at.strftime("%B %d, %Y") %></span>
+          <span>
+             <%= blog_post.published_at.present? ? blog_post.published_at.strftime("%B %d, %Y") : "Publish time not set" %>
+          </span> 
           <% if user_signed_in? && current_user.admin? %>
             <% if blog_post.draft? %>
               <span class="px-2 py-1 rounded bg-gray-100 text-gray-700">Draft</span>
