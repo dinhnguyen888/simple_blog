@@ -30,7 +30,7 @@ user.update!(
   role: "admin"
 )
 
-100.times do |i|
-  blog_post = BlogPost.where(title: "Blog Post #{i}").first_or_initialize
-  blog_post.update!(body: "Hello world", published_at: Time.current)
-end
+# 100.times do |i|
+#   blog_post = BlogPost.where(title: "Blog Post #{i}").first_or_initialize
+#   blog_post.update!(body: "Hello world", published_at: Time.current)
+# end
