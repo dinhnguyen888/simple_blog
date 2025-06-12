@@ -7,7 +7,7 @@ WORKDIR /rails
 # Cài các gói cơ bản
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
-    curl libjemalloc2 libvips libpq-dev && \
+    curl libjemalloc2 libvips sqlite3 libsqlite3-dev && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 ENV RAILS_ENV="production" \
